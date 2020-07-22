@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-warning" role="alert">
+                {{ message }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    {% for applicant in applicants %}
+        <span id="applicant{{ applicant.id }}" class="anchor-link"></span>
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title">{{ applicant.name }}</h3>
+                {% if applicant.about_message %}
+                    <p class="card-text preline">{{ applicant.about_message }}</p>
+                {% endif %}
+            </div>
+            <div class="card-header">Навыки</div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item preline">{{ applicant.skills }}</li>
+                </ul>
+            <div class="card-body">
+                <ul class="contacts">
+                    <li>slack: {{ applicant.slack }}</li>
+                    {% if applicant.telegram %}
+                        <li>telegram: {{ applicant.telegram }}</li>
+                    {% endif %}
+                    {% if applicant.whatsapp %}
+                        <li>whatsapp: {{ applicant.whatsapp }}</li>
+                    {% endif %}
+                </ul>
+            <button type="button"
+                    class="btn btn-outline-dark btn-sm"
+                    data-toggle="modal"
+                    data-target="#passwordModal{{ forloop.counter }}">Редактировать карточку</button>
+        </div>
+
+            <div class="modal fade modal-centered"
+            id="passwordModal{{ forloop.counter }}"
+            tabindex="-1"
+            role="dialog"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Введите пароль</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <form class="modal-body"
+                              id="passwordForm{{ forloop.counter }}"
+                              action="{% url 'applicant_access_check' applicant.id %}"
+                              method="post">
+                            {% csrf_token %}
+                            <input type="password" name="password">
+                        </form>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+                            <button type="submit" class="btn btn-primary" form="passwordForm{{ forloop.counter }}">Продолжить</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+
+{% endblock %}
+
+{% block uparrow %}<a href="/">&uparrow; Наверх</a>{% endblock %}

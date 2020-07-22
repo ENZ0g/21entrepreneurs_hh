@@ -1,0 +1,62 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>21 entrepreneurs</title>
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+          crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{% static 'website/style.css' %}">
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <a class="navbar-brand" href="/"><img src="{% static 'website/images/21_entrepreneurs_logo_green.png' %}"></a>
+            <li class="dropdown">
+                <a class="nav-link dropdown-toggle"
+                   data-toggle="dropdown"
+                   href="#"
+                   role="button"
+                   aria-haspopup="true"
+                   aria-expanded="false"><img src="{% static 'website/images/menu-btn.png' %}" alt="menu-btn"></a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="{% url 'new_project' project_type='startup' %}">Новый проект</a>
+                    <a class="dropdown-item" href="{% url 'new_project' project_type='idea' %}">Новая идея</a>
+                    <a class="dropdown-item" href="{% url 'new_applicant' %}">Новый соискатель</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="{% url 'applicants_list' %}">Анкеты соискателей</a>
+                    <a class="dropdown-item" href="{% url 'projects_list' %}">Карточки проектов</a>
+                    <a class="dropdown-item" href="{% url 'all_cards_list' %}">Все карточки</a>
+                </div>
+            </li>
+    </nav>
+
+    <main class="container">
+        {% block content %}{% endblock %}
+    </main>
+
+    <nav class="navbar fixed-bottom navbar-expand-sm navbar-dark bg-dark bottom-navbar">
+        <div>{% block uparrow %}{% endblock %}</div>
+        <span class="text-light">rhullen</span>
+    </nav>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+            integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+            integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+            crossorigin="anonymous"></script>
+
+    {% block custom_script %}{% endblock %}
+
+</body>
+</html>

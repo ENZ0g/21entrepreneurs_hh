@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <form action="{% url 'new_project' project_type %}" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <p class="helptext">Если вам нужно больше специалистов, сохраните карточку проекта и зайдите в нее снова с помощью
+        клавиши "Редактировать". Там будет новое поле.</p>
+        <input class="btn btn-outline-success" type="submit" name="save" value="Сохранить">
+    </form>
+
+{% endblock %}

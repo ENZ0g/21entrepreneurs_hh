@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="card-deck">
+    <div class="card">
+        <!--Image by Yvette W from Pixabay-->
+        <img src="{% static 'website/images/startup.png' %}" class="card-img-top" alt="startup-img">
+        <div class="card-body">
+            <h5 class="card-title">Ищем профи</h5>
+            <p class="card-text preline">Если вы - стартап в полном расцвете сил и для идельной команды нужны еще люди, заполните карточку проекта с указанием ваших пожеланий.
+                Или поищите среди анкет соискателей.</p>
+        </div>
+        <div class="card-footer text-center">
+            <a href="{% url 'new_project' project_type='startup' %}" class="btn btn-outline-dark btn-same-size">Добавить карточку проекта</a>
+            <a href="{% url 'applicants_list'%}" class="btn btn-outline-dark btn-same-size">Смотреть анкеты соискателей</a>
+        </div>
+    </div>
+    <div class="card">
+        <!--Image by mohamed Hassan from Pixabay-->
+        <img src="{% static 'website/images/idea.png' %}" class="card-img-top" alt="idea-img">
+        <div class="card-body">
+            <h5 class="card-title">Есть идея</h5>
+            <p class="card-text preline">Ты что-то придумал и готов взяться за реализацию идеи?
+            Опиши свои мысли, укажи кто тебе нужен.</p>
+        </div>
+        <div class="card-footer text-center">
+            <a href="{% url 'new_project' project_type='idea' %}" class="btn btn-outline-dark btn-same-size">Добавить новую идею</a>
+            <a href="{% url 'applicants_list'%}" class="btn btn-outline-dark btn-same-size">Смотреть анкеты соискателей</a>
+        </div>
+    </div>
+    <div class="card">
+        <!--Image by mohamed Hassan from Pixabay-->
+        <img src="{% static 'website/images/applicant.png' %}" class="card-img-top" alt="applicant-img">
+        <div class="card-body">
+            <h5 class="card-title">Хочу в команду</h5>
+            <p class="card-text preline">Готов влится в коллектив стартапа?
+                Ищи предложения среди проектов или опиши свои навыки в анкете соискателя. Возможно выберут именно тебя!</p>
+        </div>
+        <div class="card-footer text-center">
+            <a href="{% url 'new_applicant'%}" class="btn btn-outline-dark btn-same-size">Добавить анкету соискателя</a>
+            <a href="{% url 'projects_list'%}" class="btn btn-outline-dark btn-same-size">Смотреть карточки проектов</a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

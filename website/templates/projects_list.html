@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-warning" role="alert">
+                {{ message }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    {% for startup in startups %}
+        <span id="project{{ startup.id }}" class="anchor-link"></span>
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex card-head-wrapper">
+                    <h3 class="card-title">{{ startup.name }}</h3>
+                    <div>
+                    {% if startup.project_type == 'startup' %}
+                        <span class="badge badge-pill badge-success">Startup</span>
+                    {% elif startup.project_type == 'idea' %}
+                        <span class="badge badge-pill badge-warning">Idea</span>
+                    {% endif %}
+                    </div>
+                </div>
+                <p class="card-text preline">{{ startup.description }}</p>
+            </div>
+            <div class="card-header">Кого ждем в команду:</div>
+            <ul class="list-group list-group-flush">
+                {% for employee in startup.employees.all %}
+                    <li class="list-group-item preline">{{ employee.employee }}</li>
+                {% endfor %}
+             </ul>
+            <div class="card-body">
+                <p>Контактное лицо: {{ startup.contact_name }}</p>
+                <ul class="contacts">
+                    <li>slack: {{ startup.slack }}</li>
+                    {% if startup.telegram %}
+                        <li>telegram: {{ startup.telegram }}</li>
+                    {% endif %}
+                    {% if startup.whatsapp %}
+                        <li>whatsapp: {{ startup.whatsapp }}</li>
+                    {% endif %}
+                </ul>
+                <button type="button"
+                        class="btn btn-outline-dark btn-sm"
+                        data-toggle="modal"
+                        data-target="#passwordModal{{ forloop.counter }}">Редактировать карточку</button>
+            </div>
+
+            <div class="modal fade modal-centered"
+            id="passwordModal{{ forloop.counter }}"
+            tabindex="-1"
+            role="dialog"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Введите пароль</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <form class="modal-body"
+                              id="passwordForm{{ forloop.counter }}"
+                              action="{% url 'project_access_check' startup.id %}"
+                              method="post">
+                            {% csrf_token %}
+                            <input type="password" name="password">
+                        </form>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+                            <button type="submit" class="btn btn-primary" form="passwordForm{{ forloop.counter }}">Продолжить</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+
+{% endblock %}
+
+{% block uparrow %}<a href="/projects">&uparrow; Наверх</a>{% endblock %}

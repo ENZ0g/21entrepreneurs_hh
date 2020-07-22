@@ -1,0 +1,115 @@
+main {
+    margin: 110px 10% 50px 10%;
+}
+
+.anchor-link {
+  display: block;
+  height: 110px; /*same height as header*/
+  margin-top: -110px; /*same height as header*/
+  visibility: hidden;
+}
+
+body {
+    background-color: #E8E8E8;
+}
+
+.navbar-brand img, .nav-link img {
+    max-height: 30px;
+}
+
+.navbar-brand {
+    font-size: 1.5rem;
+}
+
+/* --- CARDS STYLE --- */
+
+.card {
+    margin-bottom: 10px;
+}
+
+.card-footer {
+    background-color: rgba(0,0,0,0);
+    border-top: none;
+}
+
+.card-footer .btn:first-child {
+    margin-bottom: 10px;
+}
+
+.card img {
+    max-height: 170px;
+    object-fit: contain;
+    margin-top: 10px;
+}
+
+.contacts {
+    list-style: none;
+}
+
+/* --------------------*/
+
+.bottom-navbar, .card-head-wrapper {
+    justify-content: space-between;
+}
+
+.bottom-navbar a {
+    color: #74f5b0;
+}
+
+.modal-body input {
+    width: 100%;
+}
+
+.helptext {
+    color: #a2a9b0;
+    font-size: .8rem;
+}
+
+.list-group-item {
+    background-color: #f7f7f7;
+}
+
+::-moz-placeholder {
+   font-size: .8rem;
+}
+
+::-webkit-input-placeholder {
+   font-size: .8rem;
+}
+
+.preline {
+    white-space: pre-line;
+}
+
+.btn-same-size {
+    width: 82%;
+}
+
+.dropdown {
+    list-style: none;
+}
+
+.dropdown a:after {
+    content: none;
+}
+
+@media (max-width: 400px) {
+    .navbar-brand {
+        font-size: 1rem;
+        margin-right: 5px;
+    }
+
+    main {
+        margin: 80px 10% 50px 10%;
+    }
+
+    .dropdown-menu {
+        left: -130px;
+    }
+}
+
+@media (max-width: 365px) {
+    .btn-danger {
+        margin-top: 10px;
+    }
+}
