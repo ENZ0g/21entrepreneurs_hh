@@ -41,6 +41,7 @@ def send_new_project_to_slack(startup, employees_list, link):
     url = os.environ.get('SLACK_URL')
     data = json.dumps(get_new_project_message(startup, employees_list, link))
     requests.post(url, headers={'Content-type': 'application/json'}, data=data)
+    requests.post('192.168.0.106:8080/json', headers={'Content-type': 'application/json'}, data=data)
 
 
 def send_new_applicant_to_slack(applicant, link):
