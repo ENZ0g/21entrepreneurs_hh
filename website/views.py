@@ -181,3 +181,7 @@ def applicant_access_check(request, applicant_id):
             return HttpResponseRedirect(reverse('edit_applicant', args=(applicant_id,)))
         messages.warning(request, 'Неверный пароль')
         return HttpResponseRedirect(reverse('applicants_list'))
+
+
+def sentry_check(request):
+    a = 1 / 0

@@ -14,7 +14,8 @@ urlpatterns = [
     path('edit_project/<int:startup_id>/', views.edit_project, name='edit_project'),
     path('edit_applicant/<int:applicant_id>/', views.edit_applicant, name='edit_applicant'),
     path('delete_project/<int:startup_id>/', views.delete_project, name='delete_project'),
-    path('delete_applicant/<int:applicant_id>/', views.delete_applicant, name='delete_applicant')
+    path('delete_applicant/<int:applicant_id>/', views.delete_applicant, name='delete_applicant'),
+    path('sentry_check/', views.sentry_check, name='sentry_check')
 ]
 
 
