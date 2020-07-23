@@ -17,6 +17,3 @@ urlpatterns = [
     path('delete_applicant/<int:applicant_id>/', views.delete_applicant, name='delete_applicant'),
     path('sentry_check/', views.sentry_check, name='sentry_check')
 ]
-
-
-# TODO: sentry

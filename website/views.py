@@ -3,13 +3,15 @@ from .models import StartupProject, Employee, Applicant
 from .utils import save_employees, request_is_correct, get_current_referrer, send_new_project_to_slack,\
     send_new_applicant_to_slack
 from django.contrib import messages
+from django.core.exceptions import PermissionDenied
 from django.forms import inlineformset_factory, Textarea
-from django.http import HttpResponseRedirect, HttpResponse, HttpResponseForbidden
+from django.http import HttpResponseRedirect, HttpResponse
 from django.template import loader
 from django.urls import reverse
 from django.views import generic
 from itertools import chain
 from operator import attrgetter
+from sentry_sdk import capture_message
 
 
 SAVED_HEADERS = {}
@@ -111,8 +113,7 @@ def edit_project(request, startup_id):
         formset = EmployeeFormSet(instance=startup)
         return HttpResponse(template.render({'form': form, 'formset': formset, 'startup_id': startup_id}, request))
     else:
-        template = loader.get_template('403_forbidden.html')
-        return HttpResponseForbidden(template.render({'message': 'Так не работает'}, request))
+        raise PermissionDenied
 
 
 def edit_applicant(request, applicant_id):
@@ -131,8 +132,7 @@ def edit_applicant(request, applicant_id):
         form = ApplicantForm(instance=applicant)
         return HttpResponse(template.render({'form': form, 'applicant_id': applicant_id}, request))
     else:
-        template = loader.get_template('403_forbidden.html')
-        return HttpResponseForbidden(template.render({'message': 'Так не работает'}, request))
+        raise PermissionDenied
 
 
 def delete_project(request, startup_id):
@@ -143,8 +143,7 @@ def delete_project(request, startup_id):
         StartupProject.objects.get(id=startup_id).delete()
         return HttpResponseRedirect(reverse(SAVED_HEADERS.get('HTTP_REFERER', 'projects_list')))
     else:
-        template = loader.get_template('403_forbidden.html')
-        return HttpResponseForbidden(template.render({'message': 'Так не работает'}, request))
+        raise PermissionDenied
 
 
 def delete_applicant(request, applicant_id):
@@ -155,8 +154,7 @@ def delete_applicant(request, applicant_id):
         Applicant.objects.get(id=applicant_id).delete()
         return HttpResponseRedirect(reverse(SAVED_HEADERS.get('HTTP_REFERER', 'applicants_list')))
     else:
-        template = loader.get_template('403_forbidden.html')
-        return HttpResponseForbidden(template.render({'message': 'Так не работает'}, request))
+        raise PermissionDenied
 
 
 def project_access_check(request, startup_id):
@@ -185,3 +183,15 @@ def applicant_access_check(request, applicant_id):
 
 def sentry_check(request):
     a = 1 / 0
+
+
+def not_found(request, exception=None):
+    capture_message("Page not found", level='error')
+    template = loader.get_template('404_not_found.html')
+    return HttpResponse(template.render({'message': 'Такой страницы нет'}, request), status=404)
+
+
+def permission_denied(request, exception=None):
+    capture_message("Permission denied", level='error')
+    template = loader.get_template('403_forbidden.html')
+    return HttpResponse(template.render({'message': 'Так не работает'}, request), status=403)
