@@ -13,6 +13,14 @@
         {% endfor %}
     {% endif %}
 
+    {% if applicants|length == 0 %}
+
+    <div class="empty-cards text-center">
+        <h4>Будь первым! Кто добавит карточку.</h4>
+    </div>
+
+    {% endif %}
+
     {% for applicant in applicants %}
         <span id="applicant{{ applicant.id }}" class="anchor-link"></span>
         <div class="card">

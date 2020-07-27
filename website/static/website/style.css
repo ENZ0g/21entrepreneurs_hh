@@ -21,6 +21,11 @@ body {
     font-size: 1.5rem;
 }
 
+.empty-cards {
+    margin-top: 45vh;
+    color: #343A40;
+}
+
 /* --- CARDS STYLE --- */
 
 .card {

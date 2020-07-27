@@ -13,6 +13,14 @@
         {% endfor %}
     {% endif %}
 
+    {% if cards|length == 0 %}
+
+    <div class="empty-cards text-center">
+        <h4>Будь первым! Кто добавит карточку.</h4>
+    </div>
+
+    {% endif %}
+
     {% for card in cards %}
         {% if card.project_type %}
             <div class="card">

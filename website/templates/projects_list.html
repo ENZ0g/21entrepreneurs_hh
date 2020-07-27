@@ -13,6 +13,14 @@
         {% endfor %}
     {% endif %}
 
+    {% if startups|length == 0 %}
+
+    <div class="empty-cards text-center">
+        <h4>Будь первым! Кто добавит карточку.</h4>
+    </div>
+
+    {% endif %}
+
     {% for startup in startups %}
         <span id="project{{ startup.id }}" class="anchor-link"></span>
         <div class="card">
