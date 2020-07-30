@@ -16,7 +16,7 @@ def get_new_project_message(project, employees_list, link):
                     "text":
                         {
                             "type": "mrkdwn",
-                            "text": ":loudspeaker:   *Новая карточка проекта на сайте 21entreprenuers.ru*"
+                            "text": ":loudspeaker:   *Новая карточка проекта на сайте 21entrepreneurs.ru*"
                         }
                 },
                 {
@@ -75,7 +75,7 @@ def get_new_applicant_message(applicant, link):
                     "text":
                         {
                             "type": "mrkdwn",
-                            "text": ":bust_in_silhouette:   *Новая карточка соискателя на сайте 21entreprenuers.ru*"
+                            "text": ":bust_in_silhouette:   *Новая карточка соискателя на сайте 21entrepreneurs.ru*"
                         }
                 },
                 {
