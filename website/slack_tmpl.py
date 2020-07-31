@@ -1,7 +1,28 @@
 def cut_off(text, words):
+    """
+    Сокращает текст до указанного количества слов.
+    Если текст был сокращен, добавляется суфикс ...
+    """
     text = text.split()
     sufix = '...' if len(text) > words else ''
     return " ".join(text[:words]) + sufix
+
+
+def check_correct_slack_name(nikname):
+    """
+    Проверят что ник для Slack записано правильно. Например:
+    nickname --> @nickname
+    @nickname --> @nickname
+    @@nickname --> @nickname
+    """
+    return '@' + nikname.split('@')[-1]
+
+
+def get_type_to_slack(type):
+    if type == 'idea':
+        return "новую идею"
+    else:
+        return "новый проект"
 
 
 def get_new_project_message(project, employees_list, link):
@@ -16,7 +37,8 @@ def get_new_project_message(project, employees_list, link):
                     "text":
                         {
                             "type": "mrkdwn",
-                            "text": ":loudspeaker:   *Новая карточка проекта на сайте 21entrepreneurs.ru*"
+                            "text": f":loudspeaker:   *{check_correct_slack_name(project.slack)} \
+                             добавил {get_type_to_slack(project.project_type)} на сайте 21entrepreneurs.ru*"
                         }
                 },
                 {
@@ -75,7 +97,8 @@ def get_new_applicant_message(applicant, link):
                     "text":
                         {
                             "type": "mrkdwn",
-                            "text": ":bust_in_silhouette:   *Новая карточка соискателя на сайте 21entrepreneurs.ru*"
+                            "text": f":bust_in_silhouette:   *{check_correct_slack_name(applicant.slack)} \
+                            добавил новую анкету на сайте 21entrepreneurs.ru*"
                         }
                 },
                 {
