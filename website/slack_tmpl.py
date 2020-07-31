@@ -96,7 +96,7 @@ def get_new_applicant_message(applicant, link):
                     "text":
                         {
                             "type": "mrkdwn",
-                            "text": f":bust_in_silhouette:   *<@U012A6269DM> добавил новую анкету на сайте 21entrepreneurs.ru*"
+                            "text": f":bust_in_silhouette:   *{check_correct_slack_name(applicant.slack)} добавил новую анкету на сайте 21entrepreneurs.ru*"
                         }
                 },
                 {
