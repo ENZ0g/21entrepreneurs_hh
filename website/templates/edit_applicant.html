@@ -9,6 +9,7 @@
         <a href="{% url 'delete_applicant' applicant_id %}"
            onclick="return confirm('Уверены, что хотите удалить анкету?');"
            class="btn btn-danger">Удалить анкету</a>
+        <span class="helptext lifetime">Анкета автоматически будет удалена {{ expire_time }}</span>
     </form>
 
 {% endblock %}

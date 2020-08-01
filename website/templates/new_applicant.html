@@ -5,6 +5,23 @@
     <form action="{% url 'new_applicant' %}" method="post">
         {% csrf_token %}
         {{ form.as_p }}
+        <div class="liftime-selector-wrapper">
+            <div class="radio-btn-wrapper">
+                <p>Анкета автоматически будет удалена через 30 дней. В можете изменить срок хранения анкеты:</p>
+                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-outline-secondary">
+                        <input type="radio" name="lifetime" value="10"> 10 дней
+                    </label>
+                    <label class="btn btn-outline-secondary">
+                        <input type="radio" name="lifetime" value="20"> 20 дней
+                    </label>
+                    <label class="btn btn-outline-secondary">
+                        <input type="radio" name="lifetime" value="30" checked> 30 дней
+                    </label>
+                </div>
+            </div>
+            <span class="helptext">В любой момент вы сможете удалить анкету самостоятельно.</span>
+        </div>
         <input class="btn btn-outline-success" type="submit" name="save" value="Сохранить">
     </form>
 

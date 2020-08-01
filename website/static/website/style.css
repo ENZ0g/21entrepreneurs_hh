@@ -98,6 +98,14 @@ body {
     content: none;
 }
 
+.liftime-selector-wrapper {
+    margin-bottom: 10px;
+}
+
+.radio-btn-wrapper p {
+    margin-bottom: 0.5rem;
+}
+
 @media (max-width: 400px) {
     .navbar-brand {
         font-size: 1rem;
@@ -116,5 +124,12 @@ body {
 @media (max-width: 365px) {
     .btn-danger {
         margin-top: 10px;
+    }
+}
+
+@media (max-width: 769px) {
+    .lifetime {
+        display: block;
+        margin-top: 5px;
     }
 }

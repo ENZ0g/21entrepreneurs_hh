@@ -12,6 +12,8 @@ from django.views import generic
 from itertools import chain
 from operator import attrgetter
 from sentry_sdk import capture_message
+import os
+from datetime import datetime, timedelta
 
 
 SAVED_HEADERS = {}
@@ -57,9 +59,11 @@ def new_applicant(request):
     if request.method == 'POST':
         form = ApplicantForm(request.POST)
         if form.is_valid():
-            applicant = form.save()
+            applicant = form.save(commit=0)
+            applicant.lifetime = int(request.POST.get('lifetime', 30))
+            applicant.save()
             link = request.build_absolute_uri(reverse('applicants_list'))
-            send_new_applicant_to_slack(applicant, link)
+            # send_new_applicant_to_slack(applicant, link)
         return HttpResponseRedirect(reverse('applicants_list'))
     form = ApplicantForm()
     template = loader.get_template('new_applicant.html')
@@ -77,10 +81,11 @@ def new_project(request, project_type):
         if form.is_valid():
             startup = form.save(commit=False)
             startup.project_type = project_type
+            startup.lifetime = int(request.POST.get('lifetime', 30))
             startup.save()
             employees_list = save_employees(startup, form)
             link = request.build_absolute_uri(reverse('projects_list'))
-            send_new_project_to_slack(startup, employees_list, link)
+            # send_new_project_to_slack(startup, employees_list, link)
         return HttpResponseRedirect(reverse('projects_list'))
     else:
         form = StartupProjectFormNew()
@@ -130,7 +135,10 @@ def edit_applicant(request, applicant_id):
                 form.save()
             return HttpResponseRedirect(reverse(SAVED_HEADERS.get('HTTP_REFERER', 'projects_list')))
         form = ApplicantForm(instance=applicant)
-        return HttpResponse(template.render({'form': form, 'applicant_id': applicant_id}, request))
+        expire_time = applicant.create_on + timedelta(applicant.lifetime)
+        return HttpResponse(template.render({'form': form,
+                                             'applicant_id': applicant_id,
+                                             'expire_time': expire_time.date().strftime("%d-%m-%Y")}, request))
     else:
         raise PermissionDenied
 
@@ -162,7 +170,7 @@ def project_access_check(request, startup_id):
     редактирования проекта, при неудаче, возращает на исходную с сообщением об ошибке."""
     startup = StartupProject.objects.get(id=startup_id)
     if request.method == 'POST':
-        if request.POST['password'] == startup.password:
+        if request.POST['password'] in (startup.password, os.environ.get('ADMIN_PASS', 'admin21')):
             SAVED_HEADERS['HTTP_REFERER'] = get_current_referrer(request)
             return HttpResponseRedirect(reverse('edit_project', args=(startup_id,)))
         messages.warning(request, 'Неверный пароль')
@@ -174,7 +182,7 @@ def applicant_access_check(request, applicant_id):
     редактирования анкеты, при неудаче, возращает на исходную с сообщением об ошибке."""
     applicant = Applicant.objects.get(id=applicant_id)
     if request.method == 'POST':
-        if request.POST['password'] == applicant.password:
+        if request.POST['password'] in (applicant.password, os.environ.get('ADMIN_PASS', 'admin21')):
             SAVED_HEADERS['HTTP_REFERER'] = get_current_referrer(request)
             return HttpResponseRedirect(reverse('edit_applicant', args=(applicant_id,)))
         messages.warning(request, 'Неверный пароль')

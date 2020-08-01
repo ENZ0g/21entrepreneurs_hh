@@ -10,6 +10,7 @@
         <a href="{% url 'delete_project' startup_id %}"
            onclick="return confirm('Уверены, что хотите удалить карточку стартапа?');"
            class="btn btn-danger">Удалить проект</a>
+        <span class="helptext lifetime">Проект автоматически будет удален {{ expire_time }}</span>
     </form>
 
 {% endblock %}

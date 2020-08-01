@@ -7,6 +7,23 @@
         {{ form.as_p }}
         <p class="helptext">Если вам нужно больше специалистов, сохраните карточку проекта и зайдите в нее снова с помощью
         клавиши "Редактировать". Там будет новое поле.</p>
+        <div class="liftime-selector-wrapper">
+            <div class="radio-btn-wrapper">
+                <p>Проект автоматически будет удален через 30 дней. Вы можете изменить срок хранения проекта:</p>
+                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-outline-secondary">
+                        <input type="radio" name="lifetime" value="10"> 10 дней
+                    </label>
+                    <label class="btn btn-outline-secondary">
+                        <input type="radio" name="lifetime" value="20"> 20 дней
+                    </label>
+                    <label class="btn btn-outline-secondary">
+                        <input type="radio" name="lifetime" value="30" checked> 30 дней
+                    </label>
+                </div>
+            </div>
+            <span class="helptext">В любой момент вы сможете удалить проект самостоятельно.</span>
+        </div>
         <input class="btn btn-outline-success" type="submit" name="save" value="Сохранить">
     </form>
 

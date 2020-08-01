@@ -51,7 +51,7 @@ class StartupProjectFormNew(forms.ModelForm):
 
     class Meta:
         model = StartupProject
-        exclude = ['upd_time', 'project_type']
+        exclude = ['create_on', 'lifetime', 'upd_time', 'project_type']
 
 
 class StartupProjectFormEdit(forms.ModelForm):
@@ -89,7 +89,7 @@ class StartupProjectFormEdit(forms.ModelForm):
 
     class Meta:
         model = StartupProject
-        exclude = ['upd_time', 'project_type']
+        exclude = ['create_on', 'lifetime', 'upd_time', 'project_type']
 
 
 class ApplicantForm(forms.ModelForm):
@@ -124,4 +124,4 @@ class ApplicantForm(forms.ModelForm):
 
     class Meta:
         model = Applicant
-        exclude = ['upd_time']
+        exclude = ['create_on', 'lifetime', 'upd_time']
