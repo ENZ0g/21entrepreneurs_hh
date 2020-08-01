@@ -7,4 +7,4 @@ dj-database-url
 requests~=2.24.0
 sentry-sdk~=0.16.2
 whitenoise~=5.1.0
-celery~=4.4.7
+django-celery-beat~=2.0.0
