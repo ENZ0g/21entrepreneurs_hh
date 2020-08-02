@@ -7,6 +7,8 @@ from datetime import datetime, timedelta
 @shared_task
 def delete_expired_database_records():
     now = datetime.now().date()
+    with open('../celery_log.txt', 'a', encoding='utf-8') as file:
+        print(f'----{now}----', file=file)
     startup_queryset = StartupProject.objects.all()
     applicant_queryset = Applicant.objects.all()
     for record in chain(startup_queryset, applicant_queryset):
