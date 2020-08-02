@@ -116,7 +116,11 @@ def edit_project(request, startup_id):
             return HttpResponseRedirect(reverse(SAVED_HEADERS.get('HTTP_REFERER', 'projects_list')))
         form = StartupProjectFormEdit(instance=startup)
         formset = EmployeeFormSet(instance=startup)
-        return HttpResponse(template.render({'form': form, 'formset': formset, 'startup_id': startup_id}, request))
+        expire_time = startup.create_on + timedelta(days=startup.lifetime)
+        return HttpResponse(template.render({'form': form,
+                                             'formset': formset,
+                                             'startup_id': startup_id,
+                                             'expire_time': expire_time.date().strftime("%d-%m-%Y")}, request))
     else:
         raise PermissionDenied
 
@@ -135,7 +139,7 @@ def edit_applicant(request, applicant_id):
                 form.save()
             return HttpResponseRedirect(reverse(SAVED_HEADERS.get('HTTP_REFERER', 'projects_list')))
         form = ApplicantForm(instance=applicant)
-        expire_time = applicant.create_on + timedelta(applicant.lifetime)
+        expire_time = applicant.create_on + timedelta(days=applicant.lifetime)
         return HttpResponse(template.render({'form': form,
                                              'applicant_id': applicant_id,
                                              'expire_time': expire_time.date().strftime("%d-%m-%Y")}, request))
