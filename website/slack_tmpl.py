@@ -20,7 +20,7 @@ def check_correct_slack_name(nikname):
 
 def get_type_to_slack(type):
     if type == 'idea':
-        return "новую идею"
+        return "новая идея"
     else:
         return "новый проект"
 
@@ -37,7 +37,7 @@ def get_new_project_message(project, employees_list, link):
                     "text":
                         {
                             "type": "mrkdwn",
-                            "text": f":loudspeaker:   *{check_correct_slack_name(project.slack)} добавил {get_type_to_slack(project.project_type)} на сайте 21entrepreneurs.ru*"
+                            "text": f":loudspeaker:   *На сайте 21entrepreneurs.ru {get_type_to_slack(project.project_type)} от {check_correct_slack_name(project.slack)}*"
                         }
                 },
                 {
@@ -96,7 +96,7 @@ def get_new_applicant_message(applicant, link):
                     "text":
                         {
                             "type": "mrkdwn",
-                            "text": f":bust_in_silhouette:   *{check_correct_slack_name(applicant.slack)} добавил новую анкету на сайте 21entrepreneurs.ru*"
+                            "text": f":bust_in_silhouette:   *На сайте 21entrepreneurs.ru новая анкета от {check_correct_slack_name(applicant.slack)}*"
                         }
                 },
                 {
