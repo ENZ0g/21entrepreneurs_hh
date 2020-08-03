@@ -4,14 +4,14 @@ import os
 
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'suhh.settings')
-app = Celery('website')
+app = Celery('suhh')
 app.config_from_object('django.conf:settings', namespace='CELERY')
+app.autodiscover_tasks()
+app.conf.timezone = 'Europe/Moscow'
 
 app.conf.beat_schedule = {
-    'clean_db_every_day': {
+    'clear_db_daily': {
         'task': 'website.tasks.delete_expired_database_records',
-        'schedule': crontab(hour=17, minute=0),
-    },
+        'schedule': crontab(minute=55, hour=23)
+    }
 }
-
-app.autodiscover_tasks()
